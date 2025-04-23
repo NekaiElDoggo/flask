@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1> Somme des chiffre d'un nombre entier </h1>
+
+<form action="{{ url_for('somme') }}" method="post">
+    <label for="nombre">Entrez un nombre entier :</label>
+    <input type="number" name="nombre" id="nombre" required>
+    <input type="submit" value="Calculer la somme">
+</form>
+
+<hr>
+
+{% if somme is not none %}
+    <h2>Résultat : {{ resultat }}</h2>
+{% endif %}
+
+{% endblock %}

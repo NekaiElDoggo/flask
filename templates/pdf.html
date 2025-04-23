@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Deposer un PDF</h1>
+<form action="{{ url_for('pdf') }}" method="post" enctype="multipart/form-data">
+    <label for="pdf_file">Choisissez un fichier PDF :</label>
+    <input type="file" name="pdf_file" id="pdf_file" accept=".pdf" required>
+    <input type="submit" value="Valider">
+</form>
+
+<hr>
+
+{% if nombre_mots is not none %}
+    <h2>Nombre de mots dans le PDF : {{ nombre_mots }}</h2>
+{% endif %}
+
+{% endblock %}
