@@ -27,6 +27,9 @@
             <li class="navbar-item">
                 <a href="{{ url_for('visualisation') }}">Visualisation</a>
             </li>
+            <li class="navbar-item">
+                <a href="{{ url_for('gantt') }}">Gantt</a>
+            </li>
             <li class="navbar-item login-logout">
                 {% if session['nom_utilisateur'] %}
                     <a href="{{ url_for('logout') }}">Se déconnecter</a>

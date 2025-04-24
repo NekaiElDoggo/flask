@@ -202,6 +202,35 @@ def visualisation():
     # Affiche le graphique dans le template
     return render_template("visualisation.html", graph_html=graph_html)
 
+#jeu de test pour le gantt
+data = [
+    {"Projet" : "Projet A", "Début" : "2023-01-01", "Fin" : "2023-01-10", "Intervenant" : "Alice"},
+    {"Projet" : "Projet B", "Début" : "2023-01-05", "Fin" : "2023-01-15", "Intervenant" : "Bob"},
+    {"Projet" : "Projet C", "Début" : "2023-01-08", "Fin" : "2023-01-20", "Intervenant" : "Charlie"},
+    {"Projet" : "Projet D", "Début" : "2023-01-12", "Fin" : "2023-01-25", "Intervenant" : "David"},
+    {"Projet" : "Projet E", "Début" : "2023-01-18", "Fin" : "2023-01-30", "Intervenant" : "Eve"},
+]
+
+@app.route("/gantt", methods=["POST", "GET"])
+def gantt():
+    # Génère un graphique Gantt, couleur depand du projet, axe Y sont les intervenants
+    df = pd.DataFrame(data)
+    df['Début'] = pd.to_datetime(df['Début'])
+    df['Fin'] = pd.to_datetime(df['Fin'])
+    fig = px.timeline(df, x_start='Début', x_end='Fin', y='Intervenant', color='Projet')
+    fig.update_layout(title='Graphique Gantt', xaxis_title='Date', yaxis_title='Tâche')
+    fig.update_yaxes(autorange="reversed")
+    fig.update_xaxes(tickformat="%Y-%m-%d")
+    fig.update_layout(title_font_weight='bold')
+
+
+
+    # Convertit le graphique en HTML
+    graph_html = fig.to_html(full_html=False)
+
+    # Affiche le graphique dans le template
+    return render_template("gantt.html", graph_html=graph_html)
+
 if __name__ == '__main__':
     # Lance l'application Flask
     app.run(debug=True)
