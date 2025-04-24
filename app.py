@@ -205,14 +205,22 @@ def visualisation():
 #jeu de test pour le gantt
 data = [
     {"Projet" : "Projet A", "Début" : "2023-01-01", "Fin" : "2023-01-10", "Intervenant" : "Alice"},
+    {"Projet" : "Projet A", "Début" : "2023-01-01", "Fin" : "2023-01-15", "Intervenant" : "Charlie"},
     {"Projet" : "Projet B", "Début" : "2023-01-05", "Fin" : "2023-01-15", "Intervenant" : "Bob"},
-    {"Projet" : "Projet C", "Début" : "2023-01-08", "Fin" : "2023-01-20", "Intervenant" : "Charlie"},
+    {"Projet" : "Projet C", "Début" : "2023-01-03", "Fin" : "2023-01-17", "Intervenant" : "Eve"},
+    {"Projet" : "Projet C", "Début" : "2023-01-16", "Fin" : "2023-01-20", "Intervenant" : "Charlie"},
     {"Projet" : "Projet D", "Début" : "2023-01-12", "Fin" : "2023-01-25", "Intervenant" : "David"},
-    {"Projet" : "Projet E", "Début" : "2023-01-18", "Fin" : "2023-01-30", "Intervenant" : "Eve"},
+    {"Projet" : "Projet E", "Début" : "2023-01-20", "Fin" : "2023-01-30", "Intervenant" : "Eve"},
+    {"Projet" : "Projet E", "Début" : "2023-01-02", "Fin" : "2023-01-08", "Intervenant" : "David"},
 ]
 
 @app.route("/gantt", methods=["POST", "GET"])
 def gantt():
+    # genere un tableau des projets
+    tab = []
+    for i in data:
+        if i['Projet'] not in tab:
+            tab.append(i['Projet'])
     # Génère un graphique Gantt, couleur depand du projet, axe Y sont les intervenants
     df = pd.DataFrame(data)
     df['Début'] = pd.to_datetime(df['Début'])
@@ -223,13 +231,11 @@ def gantt():
     fig.update_xaxes(tickformat="%Y-%m-%d")
     fig.update_layout(title_font_weight='bold')
 
-
-
     # Convertit le graphique en HTML
     graph_html = fig.to_html(full_html=False)
 
     # Affiche le graphique dans le template
-    return render_template("gantt.html", graph_html=graph_html)
+    return render_template("gantt.html", graph_html=graph_html, data=tab)
 
 if __name__ == '__main__':
     # Lance l'application Flask

@@ -1,5 +1,45 @@
 {% extends 'base.html' %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/gantt.css') }}">
+{% endblock %}
+
 {% block content %}
+
 <h1>Gantt Chart</h1>
-<div id="gantt">{{ graph_html|safe }}</div>
+<div id="content" class="content">
+<div id="project-list" class="project-list">
+    <h2 class="title-list">Liste des projets</h2>
+    <div id="projects" class="projects">
+    {% for project in data %}
+        <button class="btn" id="{{ project }}">{{ project }}</button><br>
+    {% endfor %}
+    </div>
+    <button class="add" id="add">+</button>
+</div>
+<div id="gantt" class="gantt">{{ graph_html|safe }}</div>
+</div>
+
+<div id="update" class="update">
+    <h1 id="title-project" class="title-project">XXX</h1>
+    <form id="update-form" class="update-form">
+        <label for="name" class="label">Nom du projet</label>
+        <input type="text" id="name" name="name" class="input" required>
+
+        <label for="start" class="label">Date de début</label>
+        <input type="date" id="start" name="start" class="input" required>
+
+        <label for="end" class="label">Date de fin</label>
+        <input type="date" id="end" name="end" class="input" required>
+
+        <label for="langue_source" class="label">Langue source</label>
+        <input type="text" id="langue_source" name="langue_source" class="input" required>
+
+        <label for="langue_cible" class="label">Langue cible</label>
+        <input type="text" id="langue_cible" name="langue_cible" class="input" required>
+
+        <input type="submit" class="btn-update" value="Mettre à jour">
+    </form>
+</div>
+
+<script src="{{ url_for('static', filename='js/gantt.js') }}"></script>
 {% endblock %}
