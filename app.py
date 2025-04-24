@@ -120,28 +120,14 @@ def traitement():
         # Redirige vers l'accueil si la méthode est GET
         return redirect(url_for('index'))
 
-@app.route("/jeu", methods=["POST", "GET"])
+@app.route("/jeu")
 def jeu():
     # Jeu du nombre mystère
-    if request.method == "POST":
-        reponse = int(request.form.get('nombre'))
-        if reponse == session['nombre']:
-            # Si l'utilisateur trouve le nombre
-            message = "Bravo, vous avez trouvé le nombre mystère !"
-            session["en_cours"] = False
-        elif reponse < session['nombre']:
-            # Si le nombre est trop petit
-            message = "Trop petit !"
-        else:
-            # Si le nombre est trop grand
-            message = "Trop grand !"
-        return render_template("nombre_mystere.html", message=message)
-    else:
-        # Initialise un nouveau nombre mystère
-        nombre = randint(0, 100)
-        session['nombre'] = nombre
-        session['en_cours'] = True
-        return render_template("nombre_mystere.html")
+    # Initialise un nouveau nombre mystère
+    nombre = randint(0, 100)
+    session['nombre'] = nombre
+    session['en_cours'] = True
+    return render_template("nombre_mystere.html")
 
 @app.route("/somme", methods=["POST", "GET"])
 def somme():

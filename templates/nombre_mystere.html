@@ -5,34 +5,26 @@
 {% endblock %}
 
 {% block content %}
+<meta id="nombre_mystere" name="{{ session['nombre'] }}" />
 <div id="jeu">
 <h1>Jeu du nombre mystère</h1>
-{% if session['en_cours'] %}
     <p> J'ai choisis un entier entre 0 et 100.</p>
-    <form action="{{url_for('jeu')}}" method="post">
 
-        <p>
-            <label for="nombre">Devine le nombre ?</label>
-            <input type="number" name="nombre" id="nombre" min="0" max="100" required>
-        </p>
+    <p>
+        <label for="nombre">Devine le nombre ?</label>
+        <input type="number" name="nombre" id="nombre" min="0" max="100" required>
+    </p>
 
-        <p>
-            <input class="btn" type="submit" value="Valider">
-        </p>
-
-    </form>
+    <p>
+        <button id="btn" class="btn" type="submit">Valider</button>
+    </p>
 
     <hr>
 
-    {% if message %}
-        <p>{{ message }}</p>
-    {% endif %}
-{% else %}
-    <p>{{ message }}</p>
-    <p> le nombre etait bien {{ session['nombre'] }}</p>
-    <a href="{{ url_for('jeu') }}"><button>Recommencer</button></a>
-{% endif %}
+    <p id="text_resultat"></p>
+    <a id="btn_retry" style="display: none" href="{{ url_for('jeu') }}"><button>Recommencer</button></a>
 </div>
 
+<script src="{{ url_for('static', filename='javascript/nombre_mystere.js') }}"></script>
 {% endblock %}
 
