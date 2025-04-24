@@ -4,4 +4,12 @@
 {% block content %}
 <h1>Accueil</h1>
 <p>Bonjour {{ session['nom_utilisateur']|title if session['nom_utilisateur'] else 'invité'}}, bienvenue sur mon site !</p>
+
+<button id="button_js" class="btn" onclick="" >Clique moi dessus</button>
+
+<div id="cache" style="display: none">
+    <p>Je suis caché !</p>
+</div>
+<!-- Ajoutez ceci avant la fermeture de la balise </body> dans base.html -->
+<script src="{{ url_for('static', filename='javascript/script.js') }}"></script>
 {% endblock %}
