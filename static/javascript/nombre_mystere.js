@@ -6,7 +6,7 @@ window.addEventListener("load", function () {
     const mystere = document.getElementById("nombre_mystere").name
 
     btn.addEventListener("click", function () {
-        const nombre = parseInt(input.value)
+        const nombre = Number.parseInt(input.value)
 
         if (nombre < mystere) {
             text_resultat.innerText = "."
