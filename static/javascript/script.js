@@ -1,4 +1,4 @@
-window.addEventListener("DOMContentLoaded", function () {
+globalThis.addEventListener("DOMContentLoaded", function () {
     const btn = document.getElementById("button_js");
     const div_cache = document.getElementById("cache");
 
