@@ -181,7 +181,7 @@ def pdf():
 @app.route("/visualisation", methods=["POST", "GET"])
 def visualisation():
     # Génère un graphique des utilisateurs avec le plus de tests réalisés
-    données = (
+    donnees = (
         db.session.query(Calcul.utilisateur, func.count().label("nb_test"))
         .group_by(Calcul.utilisateur)
         .order_by(desc("nb_test"))
@@ -203,19 +203,23 @@ def visualisation():
     return render_template("visualisation.html", graph_html=graph_html)
 
 #jeu de test pour le gantt
+deb = "Début"
+fin = "Fin"
 data = [
-    {"Projet" : "Projet A", "Début" : "2023-01-01", "Fin" : "2023-01-10", "Intervenant" : "Alice"},
-    {"Projet" : "Projet A", "Début" : "2023-01-01", "Fin" : "2023-01-15", "Intervenant" : "Charlie"},
-    {"Projet" : "Projet B", "Début" : "2023-01-05", "Fin" : "2023-01-15", "Intervenant" : "Bob"},
-    {"Projet" : "Projet C", "Début" : "2023-01-03", "Fin" : "2023-01-17", "Intervenant" : "Eve"},
-    {"Projet" : "Projet C", "Début" : "2023-01-16", "Fin" : "2023-01-20", "Intervenant" : "Charlie"},
-    {"Projet" : "Projet D", "Début" : "2023-01-12", "Fin" : "2023-01-25", "Intervenant" : "David"},
-    {"Projet" : "Projet E", "Début" : "2023-01-20", "Fin" : "2023-01-30", "Intervenant" : "Eve"},
-    {"Projet" : "Projet E", "Début" : "2023-01-02", "Fin" : "2023-01-08", "Intervenant" : "David"},
+    {"Projet" : "Projet A", deb : "2023-01-01", fin : "2023-01-10", "Intervenant" : "Alice"},
+    {"Projet" : "Projet A", deb : "2023-01-01", fin : "2023-01-15", "Intervenant" : "Charlie"},
+    {"Projet" : "Projet B", deb : "2023-01-05", fin : "2023-01-15", "Intervenant" : "Bob"},
+    {"Projet" : "Projet C", deb : "2023-01-03", fin : "2023-01-17", "Intervenant" : "Eve"},
+    {"Projet" : "Projet C", deb : "2023-01-16", fin : "2023-01-20", "Intervenant" : "Charlie"},
+    {"Projet" : "Projet D", deb : "2023-01-12", fin : "2023-01-25", "Intervenant" : "David"},
+    {"Projet" : "Projet E", deb : "2023-01-20", fin : "2023-01-30", "Intervenant" : "Eve"},
+    {"Projet" : "Projet E", deb : "2023-01-02", fin : "2023-01-08", "Intervenant" : "David"},
 ]
 
 @app.route("/gantt", methods=["POST", "GET"])
 def gantt():
+    deb = "Début"
+    fin = "Fin"
     # genere un tableau des projets
     tab = []
     for i in data:
@@ -223,9 +227,9 @@ def gantt():
             tab.append(i['Projet'])
     # Génère un graphique Gantt, couleur depand du projet, axe Y sont les intervenants
     df = pd.DataFrame(data)
-    df['Début'] = pd.to_datetime(df['Début'])
-    df['Fin'] = pd.to_datetime(df['Fin'])
-    fig = px.timeline(df, x_start='Début', x_end='Fin', y='Intervenant', color='Projet')
+    df[deb] = pd.to_datetime(df[deb])
+    df["Fin"] = pd.to_datetime(df["Fin"])
+    fig = px.timeline(df, x_start=deb, x_end="Fin", y='Intervenant', color='Projet')
     fig.update_layout(title='Graphique Gantt', xaxis_title='Date', yaxis_title='Tâche')
     fig.update_yaxes(autorange="reversed")
     fig.update_xaxes(tickformat="%Y-%m-%d")
