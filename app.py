@@ -190,7 +190,7 @@ def visualisation():
     )
 
     # Convertit les résultats en DataFrame
-    df = pd.DataFrame(données, columns=['utilisateur', 'nb_test'])
+    df = pd.DataFrame(donnees, columns=['utilisateur', 'nb_test'])
 
     # Crée le graphique
     fig = px.bar(df, x='utilisateur', y='nb_test', title='Top 5 des utilisateurs par nombre de tests réalisés')
