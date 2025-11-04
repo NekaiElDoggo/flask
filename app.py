@@ -228,8 +228,8 @@ def gantt():
     # Génère un graphique Gantt, couleur depand du projet, axe Y sont les intervenants
     df = pd.DataFrame(data)
     df[deb] = pd.to_datetime(df[deb])
-    df["Fin"] = pd.to_datetime(df["Fin"])
-    fig = px.timeline(df, x_start=deb, x_end="Fin", y='Intervenant', color='Projet')
+    df[fin] = pd.to_datetime(df[fin])
+    fig = px.timeline(df, x_start=deb, x_end=fin, y='Intervenant', color='Projet')
     fig.update_layout(title='Graphique Gantt', xaxis_title='Date', yaxis_title='Tâche')
     fig.update_yaxes(autorange="reversed")
     fig.update_xaxes(tickformat="%Y-%m-%d")
